@@ -1,0 +1,97 @@
+package main;
+
+import entity.Player;
+import tile.TileManager;
+
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+public class GamePanel extends JPanel implements Runnable {
+    // SCREEN SETTINGS
+    final int scalar = 3;
+    final int originalTileSize = 16; // 16x16
+    public final int tileSize = scalar * originalTileSize; // 48x48
+
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
+    public final int screenWidth = maxScreenCol * tileSize; // 768 px
+    public final int screenHeight = maxScreenRow * tileSize; // 576 px
+
+    public final int maxWorldCol = 15;
+    public final int maxWorldRow = 15;
+    public final int maxWorldX = maxWorldCol * tileSize;
+    public final int maxWorldY = maxWorldRow * tileSize;
+
+    KeyInput keyInput = new KeyInput(this);
+    TileManager tileManager = new TileManager(this);
+    public Collision collision = new Collision(this);
+    public Player player = new Player(this, keyInput);
+
+    public boolean debug = false;
+    public enum GAME_STATE {PLAY, PAUSE, TITLE}
+    public GAME_STATE gameState = GAME_STATE.PLAY;
+
+    final int tickRate = 60;
+    final double drawDelta = 1_000_000_000D / tickRate;
+    Thread gameThread;
+
+    public GamePanel() {
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setBackground(Color.BLACK);
+        this.setDoubleBuffered(true);
+        this.addKeyListener(keyInput);
+        this.setFocusable(true);
+    }
+
+    @Override
+    public void run() {
+        long lastTime = System.nanoTime();
+        long currentTime;
+        double delta = 0;
+
+        while (gameThread != null) {
+            currentTime = System.nanoTime();
+            delta += (currentTime - lastTime) / drawDelta;
+            lastTime = currentTime;
+
+            if (delta >= 1) {
+                update();
+                repaint();
+                delta--;
+            }
+        }
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        // long start = System.nanoTime();
+
+        if (gameState == GAME_STATE.TITLE) {
+            // ui draws title
+        } else if (gameState == GAME_STATE.PLAY) {
+            tileManager.draw(g2);
+            player.draw(g2);
+        }
+
+        g2.dispose();
+    }
+
+    void update() {
+        if (gameState == GAME_STATE.PLAY) {
+            player.update();
+        }
+    }
+
+    void setupGame() {
+        // Setup Props and NPCs
+    }
+
+    void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+}
