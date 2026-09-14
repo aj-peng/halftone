@@ -27,7 +27,7 @@ public class Entity {
 
     int spriteNum = 0;
     int spriteCounter = 0;
-    static final int spriteInterval = 15;
+    static final int spriteInterval = 10;
     HashMap<DIRECTION, BufferedImage[]> spriteImage = new HashMap<>();
 
     public Entity(GamePanel gp) {
