@@ -102,7 +102,10 @@ public class KeyInput implements KeyListener {
             case KeyEvent.VK_S -> gp.ui.setCommandNum(true);
             case KeyEvent.VK_SPACE -> {
                 switch (gp.ui.commandNum) {
-                    case 0 -> gp.gameState = GamePanel.GAME_STATE.PLAY;
+                    case 0 -> {
+                        gp.gameState = GamePanel.GAME_STATE.PLAY;
+                        gp.playMusic(0);
+                    }
                     case 1 -> System.out.println("settings");
                     case 2 -> System.exit(0);
                 }
