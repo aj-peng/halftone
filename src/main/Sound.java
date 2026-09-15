@@ -9,6 +9,8 @@ import java.net.URL;
 public class Sound {
     Clip clip;
     URL[] soundURL = new URL[10];
+    FloatControl fc;
+    int volumeScale = 3;
 
     public Sound() {
         soundURL[0] = getClass().getResource("/sound/wet_caves.wav");
@@ -19,6 +21,8 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[index]);
             clip = AudioSystem.getClip();
             clip.open(ais);
+            fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            setVolume();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -34,5 +38,15 @@ public class Sound {
 
     public void stop() {
         clip.stop();;
+    }
+
+    public void setVolume() {
+        fc.setValue(switch (volumeScale) {
+            case 1 -> -12F;
+            case 2 -> -5F;
+            case 3 -> 1F;
+            case 4 -> 6F;
+            default -> -80F;
+        });
     }
 }
