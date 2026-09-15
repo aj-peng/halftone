@@ -21,18 +21,23 @@ public class KeyInput implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int code = e.getKeyCode();
-        setKeyState(code, true);
+        int keyCode = e.getKeyCode();
+        switch (gp.gameState) {
+            case PLAY -> playState(keyCode);
+            case PAUSE -> pauseState(keyCode);
+            case DIALOGUE -> dialogueState(keyCode);
+            case TITLE -> titleState(keyCode);
+        }
 
-        if (code == KeyEvent.VK_BACK_QUOTE) {
+        if (keyCode == KeyEvent.VK_BACK_QUOTE) {
             gp.debug = !gp.debug;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        int code = e.getKeyCode();
-        setKeyState(code, false);
+        int keyCode = e.getKeyCode();
+        setKeyState(keyCode, false);
     }
 
     public Entity.DIRECTION getKeyDirection() {
@@ -56,6 +61,52 @@ public class KeyInput implements KeyListener {
             case KeyEvent.VK_A -> leftPressed = pressed;
             case KeyEvent.VK_S -> downPressed = pressed;
             case KeyEvent.VK_D -> rightPressed = pressed;
+        }
+    }
+
+    void playState(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D -> setKeyState(keyCode, true);
+            case KeyEvent.VK_SPACE -> {
+                // no implementation
+            }
+            case KeyEvent.VK_ESCAPE -> {
+                gp.ui.commandNum = 0;
+                gp.gameState = GamePanel.GAME_STATE.PAUSE;
+            }
+        }
+    }
+
+    void pauseState(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.VK_W -> gp.ui.setCommandNum(false);
+            case KeyEvent.VK_S -> gp.ui.setCommandNum(true);
+            case KeyEvent.VK_ESCAPE -> gp.gameState = GamePanel.GAME_STATE.PLAY;
+            case KeyEvent.VK_SPACE -> {
+                switch (gp.ui.commandNum) {
+                    case 0 -> gp.gameState = GamePanel.GAME_STATE.PLAY;
+                    case 1 -> System.out.println("settings");
+                    case 2 -> System.exit(0);
+                }
+            }
+        }
+    }
+
+    void dialogueState(int keyCode) {
+        // no implementation
+    }
+
+    void titleState(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.VK_W -> gp.ui.setCommandNum(false);
+            case KeyEvent.VK_S -> gp.ui.setCommandNum(true);
+            case KeyEvent.VK_SPACE -> {
+                switch (gp.ui.commandNum) {
+                    case 0 -> gp.gameState = GamePanel.GAME_STATE.PLAY;
+                    case 1 -> System.out.println("settings");
+                    case 2 -> System.exit(0);
+                }
+            }
         }
     }
 }

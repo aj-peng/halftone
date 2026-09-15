@@ -27,12 +27,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     KeyInput keyInput = new KeyInput(this);
     TileManager tileManager = new TileManager(this);
+    UserInterface ui = new UserInterface(this);
     public Collision collision = new Collision(this);
     public Player player = new Player(this, keyInput);
 
     public boolean debug = false;
-    public enum GAME_STATE {PLAY, PAUSE, TITLE}
-    public GAME_STATE gameState = GAME_STATE.PLAY;
+    public enum GAME_STATE {PLAY, PAUSE, TITLE, DIALOGUE}
+    public GAME_STATE gameState = GAME_STATE.TITLE;
 
     final int tickRate = 60;
     final double drawDelta = 1_000_000_000D / tickRate;
@@ -68,16 +69,14 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        // long start = System.nanoTime();
 
         if (gameState == GAME_STATE.TITLE) {
-            // ui draws title
-        } else if (gameState == GAME_STATE.PLAY) {
+            ui.draw(g2);
+        } else {
             tileManager.draw(g2);
             player.draw(g2);
+            ui.draw(g2);
         }
-
-        g2.dispose();
     }
 
     void update() {
