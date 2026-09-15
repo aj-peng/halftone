@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class Entity {
+public abstract class Entity {
     GamePanel gp;
     Utility utility = new Utility();
 
@@ -29,6 +29,9 @@ public class Entity {
     int spriteCounter = 0;
     static final int spriteInterval = 10;
     HashMap<DIRECTION, BufferedImage[]> spriteImage = new HashMap<>();
+
+    public int maxHealth;
+    public int health;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
