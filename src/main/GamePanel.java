@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldX = maxWorldCol * tileSize;
     public final int maxWorldY = maxWorldRow * tileSize;
 
+    Sound sound = new Sound(), music = new Sound();
     KeyInput keyInput = new KeyInput(this);
     TileManager tileManager = new TileManager(this);
     UserInterface ui = new UserInterface(this);
@@ -79,6 +80,20 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    public void playSound(int index) {
+        sound.setFile(index);
+        sound.play();
+    }
+
+    public void playMusic(int index) {
+        music.setFile(index);
+        music.play();
+        music.loop();
+    }
+
+    public void stopMusic() {
+        music.stop();
+    }
     void update() {
         if (gameState == GAME_STATE.PLAY) {
             player.update();
