@@ -75,6 +75,8 @@ public class Player extends Entity{
         worldY = gp.tileSize * 2;
         speed = 2;
         direction = DIRECTION.DOWN;
+        maxHealth = 5;
+        health = maxHealth;
     }
 
     void setImages() {
