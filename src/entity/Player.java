@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Player extends Entity{
+public class Player extends Entity {
     KeyInput keyInput;
 
     public final int screenX;
@@ -30,6 +30,7 @@ public class Player extends Entity{
         setImages();
     }
 
+    @Override
     public void draw(Graphics2D g2) {
         BufferedImage image = getSpriteImage();
         g2.drawImage(image, screenX, screenY, null);

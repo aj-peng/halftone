@@ -1,6 +1,7 @@
 package entity;
 
 import common.Direction;
+import common.Drawable;
 import main.GamePanel;
 import common.Utility;
 
@@ -12,13 +13,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 
-public abstract class Entity {
+public abstract class Entity implements Drawable {
     GamePanel gp;
     Utility utility = new Utility();
 
-    // public enum DIRECTION {UP, DOWN, LEFT, RIGHT}
     public Direction direction = Direction.DOWN;
-
     public int worldX, worldY, speed;
     boolean collision = false;
     boolean idle = true;
@@ -39,6 +38,10 @@ public abstract class Entity {
     }
 
     public abstract void draw(Graphics2D g2);
+
+    public int getDrawOrder() {
+        return worldY;
+    }
 
     public abstract void update();
 
