@@ -37,15 +37,15 @@ public class Sound {
     }
 
     public void stop() {
-        clip.stop();;
+        clip.stop();
     }
 
     public void setVolume() {
         fc.setValue(switch (volumeScale) {
-            case 1 -> -12F;
-            case 2 -> -5F;
-            case 3 -> 1F;
-            case 4 -> 6F;
+            case 1 -> -16F;
+            case 2 -> -8F;
+            case 3 -> 0F;
+            case 4 -> 8F;
             default -> -80F;
         });
     }
