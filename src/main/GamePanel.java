@@ -1,5 +1,6 @@
 package main;
 
+import common.GameState;
 import entity.Player;
 import tile.TileManager;
 
@@ -28,13 +29,12 @@ public class GamePanel extends JPanel implements Runnable {
     Sound sound = new Sound(), music = new Sound();
     KeyInput keyInput = new KeyInput(this);
     TileManager tileManager = new TileManager(this);
-    UserInterface ui = new UserInterface(this);
+    public UserInterface ui = new UserInterface(this);
     public Collision collision = new Collision(this);
     public Player player = new Player(this, keyInput);
 
     public boolean debug = false;
-    public enum GAME_STATE {PLAY, PAUSE, TITLE, DIALOGUE}
-    public GAME_STATE gameState = GAME_STATE.TITLE;
+    public GameState gameState = GameState.TITLE;
 
     final int tickRate = 60;
     final double drawDelta = 1_000_000_000D / tickRate;
@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        if (gameState == GAME_STATE.TITLE) {
+        if (gameState == GameState.TITLE) {
             ui.draw(g2);
         } else {
             tileManager.draw(g2);
@@ -95,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
         music.stop();
     }
     void update() {
-        if (gameState == GAME_STATE.PLAY) {
+        if (gameState == GameState.PLAY) {
             player.update();
         }
     }

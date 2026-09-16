@@ -1,6 +1,7 @@
 package main;
 
-import entity.Entity;
+import common.Direction;
+import common.GameState;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -40,7 +41,7 @@ public class KeyInput implements KeyListener {
         setKeyState(keyCode, false);
     }
 
-    public Entity.DIRECTION getKeyDirection() {
+    public Direction getKeyDirection() {
         int x = (rightPressed ? 1 : 0) - (leftPressed ? 1 : 0);
         int y = (upPressed ? 1 : 0) - (downPressed ? 1 : 0);
 
@@ -49,9 +50,9 @@ public class KeyInput implements KeyListener {
         }
 
         if (Math.abs(y) < Math.abs(x)) {
-            return x > 0 ? Entity.DIRECTION.RIGHT : Entity.DIRECTION.LEFT;
+            return x > 0 ? Direction.RIGHT : Direction.LEFT;
         } else {
-            return y > 0 ? Entity.DIRECTION.UP : Entity.DIRECTION.DOWN;
+            return y > 0 ? Direction.UP : Direction.DOWN;
         }
     }
 
@@ -72,7 +73,7 @@ public class KeyInput implements KeyListener {
             }
             case KeyEvent.VK_ESCAPE -> {
                 gp.ui.commandNum = 0;
-                gp.gameState = GamePanel.GAME_STATE.PAUSE;
+                gp.gameState = GameState.PAUSE;
             }
         }
     }
@@ -81,10 +82,10 @@ public class KeyInput implements KeyListener {
         switch (keyCode) {
             case KeyEvent.VK_W -> gp.ui.setCommandNum(false);
             case KeyEvent.VK_S -> gp.ui.setCommandNum(true);
-            case KeyEvent.VK_ESCAPE -> gp.gameState = GamePanel.GAME_STATE.PLAY;
+            case KeyEvent.VK_ESCAPE -> gp.gameState = GameState.PLAY;
             case KeyEvent.VK_SPACE -> {
                 switch (gp.ui.commandNum) {
-                    case 0 -> gp.gameState = GamePanel.GAME_STATE.PLAY;
+                    case 0 -> gp.gameState = GameState.PLAY;
                     case 1 -> System.out.println("settings");
                     case 2 -> System.exit(0);
                 }
@@ -103,7 +104,7 @@ public class KeyInput implements KeyListener {
             case KeyEvent.VK_SPACE -> {
                 switch (gp.ui.commandNum) {
                     case 0 -> {
-                        gp.gameState = GamePanel.GAME_STATE.PLAY;
+                        gp.gameState = GameState.PLAY;
                         gp.playMusic(0);
                     }
                     case 1 -> System.out.println("settings");

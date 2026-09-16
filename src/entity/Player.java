@@ -1,5 +1,6 @@
 package entity;
 
+import common.Direction;
 import main.GamePanel;
 import main.KeyInput;
 
@@ -39,7 +40,7 @@ public class Player extends Entity{
     }
 
     public void update() {
-        DIRECTION nextDirection = keyInput.getKeyDirection();
+        Direction nextDirection = keyInput.getKeyDirection();
         idle = (nextDirection == null);
 
         if (nextDirection != null) {
@@ -73,34 +74,34 @@ public class Player extends Entity{
         worldX = gp.tileSize * 7;
         worldY = gp.tileSize * 2;
         speed = 2;
-        direction = DIRECTION.DOWN;
+        direction = Direction.DOWN;
         maxHealth = 5;
         health = maxHealth;
     }
 
     void setImages() {
-        spriteImage.put(DIRECTION.UP, new BufferedImage[] {
+        spriteImage.put(Direction.UP, new BufferedImage[] {
                 loadImage("/player/mono_up_1", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_up_2", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_up_3", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_up_4", gp.tileSize, gp.tileSize),
         });
 
-        spriteImage.put(DIRECTION.DOWN, new BufferedImage[] {
+        spriteImage.put(Direction.DOWN, new BufferedImage[] {
                 loadImage("/player/mono_down_1", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_down_2", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_down_3", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_down_4", gp.tileSize, gp.tileSize),
         });
 
-        spriteImage.put(DIRECTION.LEFT, new BufferedImage[] {
+        spriteImage.put(Direction.LEFT, new BufferedImage[] {
                 loadImage("/player/mono_left_1", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_left_2", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_left_3", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_left_4", gp.tileSize, gp.tileSize),
         });
 
-        spriteImage.put(DIRECTION.RIGHT, new BufferedImage[] {
+        spriteImage.put(Direction.RIGHT, new BufferedImage[] {
                 loadImage("/player/mono_right_1", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_right_2", gp.tileSize, gp.tileSize),
                 loadImage("/player/mono_right_3", gp.tileSize, gp.tileSize),

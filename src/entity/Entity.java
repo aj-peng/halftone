@@ -1,5 +1,6 @@
 package entity;
 
+import common.Direction;
 import main.GamePanel;
 import main.Utility;
 
@@ -15,8 +16,8 @@ public abstract class Entity {
     GamePanel gp;
     Utility utility = new Utility();
 
-    public enum DIRECTION {UP, DOWN, LEFT, RIGHT}
-    public DIRECTION direction = DIRECTION.DOWN;
+    // public enum DIRECTION {UP, DOWN, LEFT, RIGHT}
+    public Direction direction = Direction.DOWN;
 
     public int worldX, worldY, speed;
     boolean collision = false;
@@ -28,7 +29,7 @@ public abstract class Entity {
     int spriteNum = 0;
     int spriteCounter = 0;
     static final int spriteInterval = 10;
-    HashMap<DIRECTION, BufferedImage[]> spriteImage = new HashMap<>();
+    HashMap<Direction, BufferedImage[]> spriteImage = new HashMap<>();
 
     public int maxHealth;
     public int health;
@@ -37,13 +38,9 @@ public abstract class Entity {
         this.gp = gp;
     }
 
-    public void draw(Graphics2D g2) {
-        // no implementation
-    }
+    public abstract void draw(Graphics2D g2);
 
-    public void update() {
-        // no implementation
-    }
+    public abstract void update();
 
     BufferedImage loadImage(String imagePath, int width, int height) {
         BufferedImage image;
