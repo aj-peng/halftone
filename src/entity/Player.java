@@ -46,8 +46,7 @@ public class Player extends Entity{
             direction = nextDirection;
 
             // collision check tile, objects, entities
-            collision = false;
-            gp.collision.checkTile(this);
+            collision = gp.collision.checkTile(this);
 
             if (!collision) {
                 switch (direction) {

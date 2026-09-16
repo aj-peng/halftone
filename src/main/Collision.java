@@ -9,7 +9,7 @@ public class Collision {
         this.gp = gp;
     }
 
-    public void checkTile(Entity entity) {
+    public boolean checkTile(Entity entity) {
         int entityLeftWorldX = entity.worldX + entity.hitbox.x;
         int entityRightWorldX = entityLeftWorldX + entity.hitbox.width;
         int entityTopWorldY = entity.worldY + entity.hitbox.y;
@@ -39,8 +39,6 @@ public class Collision {
             }
         }
 
-        if (gp.tileManager.getTileCollision(tileNum1) || gp.tileManager.getTileCollision(tileNum2)) {
-            entity.collision = true;
-        }
+        return (gp.tileManager.getTileCollision(tileNum1) || gp.tileManager.getTileCollision(tileNum2));
     }
 }

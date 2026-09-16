@@ -19,7 +19,7 @@ public abstract class Entity {
     public DIRECTION direction = DIRECTION.DOWN;
 
     public int worldX, worldY, speed;
-    public boolean collision = false;
+    boolean collision = false;
     boolean idle = true;
 
     public Rectangle hitbox = new Rectangle(0, 0, 48, 48);
