@@ -48,6 +48,21 @@ public abstract class Item implements Drawable {
         return worldY;
     }
 
+    public void setPosition(int col, int row) {
+        worldX = gp.tileSize * col;
+        worldY = gp.tileSize * row;
+    }
+
+    public void convertWorldHitbox() {
+        hitbox.x += worldX;
+        hitbox.y += worldY;
+    }
+
+    public void resetWorldHitbox() {
+        hitbox.x = hitboxDefaultX;
+        hitbox.y = hitboxDefaultY;
+    }
+
     void setHitbox(int width, int height) {
         width = Math.clamp(width, 1, gp.tileSize);
         height = Math.clamp(height, 1, gp.tileSize);

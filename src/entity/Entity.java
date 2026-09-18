@@ -2,8 +2,8 @@ package entity;
 
 import common.Direction;
 import common.Drawable;
-import main.GamePanel;
 import common.Utility;
+import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
@@ -44,6 +44,16 @@ public abstract class Entity implements Drawable {
     }
 
     public abstract void update();
+
+    public void resetWorldHitbox() {
+        hitbox.x = hitboxDefaultX;
+        hitbox.y = hitboxDefaultY;
+    }
+
+    public void convertWorldHitbox(boolean move) {
+        hitbox.x += worldX + (move ? speed : 0);
+        hitbox.y += worldY + (move ? speed : 0);
+    }
 
     BufferedImage loadImage(String imagePath, int width, int height) {
         BufferedImage image;
