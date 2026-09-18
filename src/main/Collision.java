@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import item.Item;
 
 public class Collision {
     GamePanel gp;
@@ -40,5 +41,27 @@ public class Collision {
         }
 
         return (gp.tileManager.getTileCollision(tileNum1) || gp.tileManager.getTileCollision(tileNum2));
+    }
+
+    public int checkItem(Entity entity) {
+        int index = -1;
+        entity.convertWorldHitbox(true);
+
+        for (int i = 0; i < gp.items.length; i++) {
+            Item item = gp.items[i];
+            if (item == null) continue;
+
+            item.convertWorldHitbox();
+            boolean collide = entity.hitbox.intersects(item.hitbox);
+            item.resetWorldHitbox();
+
+            if (collide) {
+                index = i;
+                break;
+            }
+        }
+
+        entity.resetWorldHitbox();
+        return index;
     }
 }
