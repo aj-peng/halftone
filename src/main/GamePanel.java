@@ -1,7 +1,9 @@
 package main;
 
+import common.Drawable;
 import common.GameState;
 import entity.Player;
+import item.Item;
 import tile.TileManager;
 
 import javax.swing.JPanel;
@@ -9,6 +11,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
@@ -31,7 +35,11 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileManager = new TileManager(this);
     public UserInterface ui = new UserInterface(this);
     public Collision collision = new Collision(this);
+
+    final Comparator<Drawable> drawOrder = Comparator.comparingInt(Drawable::getDrawOrder);
+    final ArrayList<Drawable> drawList = new ArrayList<>();
     public Player player = new Player(this, keyInput);
+    public Item[] items = new Item[8];
 
     public boolean debug = false;
     public GameState gameState = GameState.TITLE;
@@ -75,7 +83,17 @@ public class GamePanel extends JPanel implements Runnable {
             ui.draw(g2);
         } else {
             tileManager.draw(g2);
-            player.draw(g2);
+
+            drawList.clear();
+            drawList.add(player);
+            for (Item item : items) {
+                if (item != null) drawList.add(item);
+            }
+            drawList.sort(drawOrder);
+            for (Drawable sprite : drawList) {
+                sprite.draw(g2);
+            }
+
             ui.draw(g2);
         }
     }
@@ -94,6 +112,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void stopMusic() {
         music.stop();
     }
+
     void update() {
         if (gameState == GameState.PLAY) {
             player.update();
