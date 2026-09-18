@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Sound sound = new Sound(), music = new Sound();
     KeyInput keyInput = new KeyInput(this);
+    Scene scene = new Scene(this);
     TileManager tileManager = new TileManager(this);
     public UserInterface ui = new UserInterface(this);
     public Collision collision = new Collision(this);
@@ -120,7 +121,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     void setupGame() {
-        // Setup Props and NPCs
+        // Setup Items and NPCs
+        scene.setItems();
     }
 
     void startGameThread() {
