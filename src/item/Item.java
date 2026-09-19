@@ -48,6 +48,11 @@ public abstract class Item implements Drawable {
         return worldY;
     }
 
+    public void pickUp() {
+        gp.playSound(1);
+        System.out.println("Picked up: " + name);
+    }
+
     public void setPosition(int col, int row) {
         worldX = gp.tileSize * col;
         worldY = gp.tileSize * row;
