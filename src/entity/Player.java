@@ -48,7 +48,11 @@ public class Player extends Entity {
             direction = nextDirection;
 
             // collision check tile, objects, entities
+            int itemIndex = gp.collision.checkItem(this);
             collision = gp.collision.checkTile(this);
+            if (itemIndex != -1) {
+                pickUp(itemIndex);
+            }
 
             if (!collision) {
                 switch (direction) {
@@ -71,6 +75,15 @@ public class Player extends Entity {
         return (x + gp.tileSize > worldX - screenX) && (x - gp.tileSize < worldX + screenX) &&
                 (y + gp.tileSize > worldY - screenY) && (y - gp.tileSize < worldY + screenY);
     }
+
+    void pickUp(int index) {
+        if (index == -1) return;
+        if (gp.items[index] != null) {
+            gp.items[index].pickUp();
+            gp.items[index] = null;
+        }
+    }
+
     void setValues() {
         worldX = gp.tileSize * 7;
         worldY = gp.tileSize * 2;
