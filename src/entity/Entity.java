@@ -51,8 +51,16 @@ public abstract class Entity implements Drawable {
     }
 
     public void convertWorldHitbox(boolean move) {
-        hitbox.x += worldX + (move ? speed : 0);
-        hitbox.y += worldY + (move ? speed : 0);
+        hitbox.x += worldX;
+        hitbox.y += worldY;
+        if (move) {
+            switch (direction) {
+                case UP -> hitbox.y -= speed;
+                case DOWN -> hitbox.y += speed;
+                case LEFT -> hitbox.x -= speed;
+                case RIGHT -> hitbox.x += speed;
+            }
+        }
     }
 
     BufferedImage loadImage(String imagePath, int width, int height) {
